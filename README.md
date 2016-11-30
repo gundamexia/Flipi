@@ -11,3 +11,8 @@
 - [x] Definida la corriente de datos.
 - [x] Definida la estructúra básica.
 - [x] Delimitados los objetivos de la aplicación.
+- [x] Definido el alcance de la interfaz de configuración.
+- [ ] Finalizada la interfaz de configuración.
+- [ ] Implementado el, adaptado especialmente a la interfaz de configuración.
+- [ ] Generalizado el juego base para generar otros juegos fácilmente.
+- [ ] Implementados otros juegos basandose en la plantilla.
