@@ -10,12 +10,12 @@ import android.widget.SeekBar;
 
 public class MainActivity extends AppCompatActivity {
 
-    SeekBar seekBarRows;
-    SeekBar seekBarColumns;
-    SeekBar seekBarMaxLoop;
-    RadioGroup radioGroup;
-    CheckBox checkBoxSound;
-    CheckBox checkBoxHaptic;
+    private SeekBar seekBarRows;
+    private SeekBar seekBarColumns;
+    private SeekBar seekBarMaxLoop;
+    private RadioGroup radioGroup;
+    private CheckBox checkBoxSound;
+    private CheckBox checkBoxHaptic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         initVariables();
     }
 
+    // Inicia todas las variables necesarias
     private void initVariables() {
         seekBarRows = (SeekBar) findViewById(R.id.seekBarRows);
         seekBarColumns = (SeekBar) findViewById(R.id.seekBarColumns);
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         checkBoxHaptic = (CheckBox) findViewById(R.id.checkBoxHaptic);
     }
 
+    // Crea un nuevo intent para iniciar la clase flipi con las variables necesarias
     public void sendBundle(View v) {
         Intent intentFlipi = new Intent(this, Flipi.class);
 
@@ -43,4 +45,5 @@ public class MainActivity extends AppCompatActivity {
 
         startActivity(intentFlipi);
     }
+
 }

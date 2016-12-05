@@ -6,21 +6,25 @@ import android.widget.TextView;
 
 public class Flipi extends Activity {
 
-    TextView textViewText;
+    private TextView textViewText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.flipi);
+
+        // Bundle que contiene los extras que se hayan puesto desde otra actividad
+        Bundle configs = getIntent().getExtras();
 
         initVariables();
-        receiveBundle(savedInstanceState);
+        receiveBundle(configs);
     }
 
     private void initVariables() {
         textViewText = (TextView) findViewById(R.id.textViewText);
     }
 
-    private void receiveBundle(Bundle bundleConfig) {
-        textViewText.setText(bundleConfig.getInt("seekBarRows"));
+    private void receiveBundle(Bundle configs) {
+        textViewText.setText(String.valueOf(configs.getInt("seekBarRows")));
     }
 }
