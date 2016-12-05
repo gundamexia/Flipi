@@ -1,11 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Flip</string>
-    <string name="textViewRows"> Rows: </string>
-    <string name="textViewColumns"> Columns: </string>
-    <string name="textViewMaxLoop"> Max Loop: </string>
-    <string name="buttonPlay"> Play! </string>
-    <string name="radioButtonColors"> Colors </string>
-    <string name="radioButtonNumbers"> Numbers </string>
-    <string name="checkBoxSound"> Sound </string>
-    <string name="checkBoxHaptic"> Haptic </string>
+    <string name="textViewRows">Rows:</string>
+    <string name="textViewColumns">Columns:</string>
+    <string name="textViewMaxLoop">Max Loop:</string>
+    <string name="buttonPlay">Play!</string>
+    <string name="chooseAGame">Choose a game</string>
+    <string name="checkBoxSound">Sound</string>
+    <string name="checkBoxHaptic">Haptic</string>
+
+    <string name="norowsnocolumnsnomaxloops">It must have more than 0 rows, columns or max loops</string>
+
+    <string-array name="games">
+        <item>Flip: Colors</item>
+        <item>Flip: Numbers</item>
+    </string-array>
 </resources>

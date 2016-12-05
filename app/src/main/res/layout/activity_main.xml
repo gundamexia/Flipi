@@ -112,28 +112,20 @@
                 android:max="16" />
         </LinearLayout>
 
-        <RadioGroup
-            android:id="@+id/radioGroup"
+        <TextView
+            android:id="@+id/textViewChooseAGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            android:text="@string/chooseAGame" />
+
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="fill_horizontal"
-            android:layout_marginBottom="30dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/radioButtonColors"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/radioButtonColors" />
-
-            <RadioButton
-                android:id="@+id/radioButtonNumbers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/radioButtonNumbers" />
-        </RadioGroup>
+            android:id="@+id/spinnerTypeOfGame"
+            android:entries="@array/games"
+            android:layout_marginBottom="10dp"
+            android:prompt="@string/chooseAGame"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -162,5 +154,6 @@
             android:layout_height="wrap_content"
             android:onClick="sendBundle"
             android:text="@string/buttonPlay" />
+
     </LinearLayout>
 </ScrollView>

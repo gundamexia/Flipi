@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="textViewRows"> Filas: </string>
-    <string name="textViewColumns"> Columnas: </string>
-    <string name="textViewMaxLoop"> Máx. Repeticiones: </string>
-    <string name="buttonPlay"> Jugar! </string>
-    <string name="radioButtonColors"> Colores: </string>
-    <string name="radioButtonNumbers"> Numberos: </string>
-    <string name="checkBoxSound"> Sonido: </string>
-    <string name="checkBoxHaptic"> Haptico: </string>
+    <string name="textViewRows">Filas:</string>
+    <string name="textViewColumns">Columnas:</string>
+    <string name="textViewMaxLoop">Máx. Repeticiones:</string>
+    <string name="buttonPlay">Jugar!</string>
+    <string name="chooseAGame">Escoja un juego</string>
+    <string name="checkBoxSound">Sonido</string>
+    <string name="checkBoxHaptic">Haptico</string>
+
+    <string name="norowsnocolumnsnomaxloops">Tiene que tener más de 0 filas, columnas o máx. bucles</string>
+
+    <string-array name="games">
+        <item>Flip: Colores</item>
+        <item>Flip: Números</item>
+    </string-array>
 </resources>
