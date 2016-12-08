@@ -8,6 +8,7 @@
     <string name="chooseAGame">Choose a game</string>
     <string name="checkBoxSound">Sound</string>
     <string name="checkBoxHaptic">Haptic</string>
+    <string name="textViewPulsations">Pulsations</string>
 
     <string name="norowsnocolumnsnomaxloops">It must have more than 0 rows, columns or max loops</string>
 

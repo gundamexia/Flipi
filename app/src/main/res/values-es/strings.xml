@@ -7,6 +7,7 @@
     <string name="chooseAGame">Escoja un juego</string>
     <string name="checkBoxSound">Sonido</string>
     <string name="checkBoxHaptic">Haptico</string>
+    <string name="textViewPulsations">Pulsaciones</string>
 
     <string name="norowsnocolumnsnomaxloops">Tiene que tener más de 0 filas, columnas o máx. bucles</string>
 
