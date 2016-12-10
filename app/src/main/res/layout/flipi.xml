@@ -20,7 +20,7 @@
             android:id="@+id/clicksTxt" />
 
         <TextView
-            android:text="Pulsaciones:"
+            android:text="@string/Presses"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/clicksTxt"

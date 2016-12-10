@@ -12,8 +12,18 @@
 
     <string name="norowsnocolumnsnomaxloops">It must have more than 0 rows, columns or max loops</string>
 
+    <string name="itemLanguage">Language</string>
+    <string name="itemEnglish">English</string>
+    <string name="itemSpanish">Spanish</string>
+    <string name="itemScore">Score</string>
+    <string name="itemPreferences">Preferences</string>
+
     <string-array name="games">
         <item>Flip: Colors</item>
         <item>Flip: Numbers</item>
     </string-array>
+
+    <string name="Presses">Presses:</string>
+    <string name="itemExitGame">Exit Game</string>
+    <string name="itemExitApp">Exit App</string>
 </resources>

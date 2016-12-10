@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.os.Vibrator;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.LinearLayout;
@@ -108,8 +109,8 @@ public class Flipi extends Activity {
         //obtención de tamaño de pantalla
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int width = dm.widthPixels / topTileX;
-        int height = (dm.heightPixels - 90) / topTileY;
+        final int WIDTH = dm.widthPixels / topTileX;
+        final int HEIGHT = (dm.heightPixels - 90) / topTileY;
 
 
         //inicialización de arrays
@@ -138,8 +139,8 @@ public class Flipi extends Activity {
 
                 // se guarda el identificador en una matriz
                 ids[j][i] = ident;
-                tv.setHeight(height);
-                tv.setWidth(width);
+                tv.setHeight(HEIGHT);
+                tv.setWidth(WIDTH);
                 tv.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View view) {
                         hasClick(((TileView) view).x, ((TileView) view).y);
@@ -154,6 +155,12 @@ public class Flipi extends Activity {
         t.start();
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.flipi_menu, menu);
+        return true;
+    }
 
     //Método llamado al clickar en un botón (Definido programáticamente).
     protected void hasClick(int x, int y) {
@@ -254,9 +261,17 @@ public class Flipi extends Activity {
     //Acaba la partida devolviendo el total de clicks.
     private void gameWon(){
         Intent resultIntent = new Intent();
-        Log.i("Number_of_clicks", Integer.toString(numberOfClicks));
+        Log.i("GAME_FINISHED", "User won the game");
         resultIntent.putExtra("clicks", numberOfClicks);
         setResult(RESULT_OK, resultIntent);
+        finish();
+    }
+
+    //
+    @Override
+    public void onBackPressed() {
+        Log.i("GAME_FINISHED", "Back button pressed");
+        setResult(RESULT_CANCELED);
         finish();
     }
 }
