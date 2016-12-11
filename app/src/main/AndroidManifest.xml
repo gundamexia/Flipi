@@ -15,7 +15,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Flipi" />
-        <activity android:name=".Score" />
+        <activity android:name=".score" />
     </application>
 
 </manifest>

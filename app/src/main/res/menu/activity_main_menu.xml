@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/activity_main_menu">
 
 
-    <item android:title="@string/itemLanguage"
-        android:id="@+id/itemLanguage" >
-        <menu >
-            <item android:title="@string/itemEnglish"
-                android:id="@+id/itemEnglish" />
-            <item android:title="@string/itemSpanish"
-                android:id="@+id/itemSpanish" />
+    <item
+        android:id="@+id/itemLanguage"
+        android:title="@string/itemLanguage">
+        <menu>
+            <item
+                android:id="@+id/itemEnglish"
+                android:title="@string/itemEnglish" />
+            <item
+                android:id="@+id/itemSpanish"
+                android:title="@string/itemSpanish" />
         </menu>
     </item>
-    <item android:title="@string/itemScore"
-        android:id="@+id/itemScores" />
-    <item android:title="@string/itemPreferences"
-        android:id="@+id/itemPreferences" />
+    <item
+        android:id="@+id/itemScores"
+        android:title="@string/itemScore" />
+    <item
+        android:id="@+id/itemPreferences"
+        android:title="@string/itemPreferences" />
 </menu>

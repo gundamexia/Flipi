@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:title="@string/itemExitGame"
-        android:id="@+id/itemExitGame"/>
-    <item android:title="@string/itemExitApp"
-        android:id="@+id/itemExitApp" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/itemExitGame"
+        android:title="@string/itemExitGame" />
+    <item
+        android:id="@+id/itemExitApp"
+        android:title="@string/itemExitApp" />
 </menu>

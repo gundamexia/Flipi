@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Environment;
 import android.os.Vibrator;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.LinearLayout;
@@ -21,8 +23,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
-public class Flipi extends Activity {
+public class Flipi extends AppCompatActivity {
 
     //tipos de juego
     private final int COLOR = 0;
@@ -331,8 +334,25 @@ public class Flipi extends Activity {
      * Revisa si el almacenamiento externo está disponible para la lectura y escritura.
      * @return boolean True si está disponible, False si no lo está
      */
-    public boolean isExternalStorageWritable() {
+    private boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
         return Environment.MEDIA_MOUNTED.equals(state);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.itemExitGame:
+                onBackPressed();
+                return true;
+            case R.id.itemExitApp:
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("exitApp", "exitapp");
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
