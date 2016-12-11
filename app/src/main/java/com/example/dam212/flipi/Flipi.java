@@ -392,6 +392,12 @@ public class Flipi extends AppCompatActivity {
         return Environment.MEDIA_MOUNTED.equals(state);
     }
 
+    /**
+     * Callback llamado cuando se selecciona un item del menú.
+     * Puede o bien salir del juego o completamente de la aplicación.
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -409,15 +415,24 @@ public class Flipi extends AppCompatActivity {
         }
     }
 
+    /**
+     * Callback llamado cuando se mata a la actividad.
+     * Guarda el cronómetro, las pulsaciones, los valores e ids de las casillas.
+     * @param savedInstanceState: Bundle - recibido de forma automatica. Usado para generar mi bundle.
+     */
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putBoolean("MyBoolean", true);
         savedInstanceState.putLong("Chronometer", chronometer.getBase());
         savedInstanceState.putInt("Presses", numberOfClicks);
-        savedInstanceState.putIntArray("values");
+        savedInstanceState.putIntArray("Values", matrixToArray(values));
+        savedInstanceState.putIntArray("Ids", matrixToArray(ids));
     }
-
+    /**
+     * Callback llamado cuando se restaura la actividad.
+     * Recoge el cronómetro, las pulsaciones, los valores e ids de las casillas.
+     * @param savedInstanceState: Bundle - recibido de forma automatica. Usado para obtener mis datos.
+     */
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -425,19 +440,39 @@ public class Flipi extends AppCompatActivity {
         chronometer.start();
         numberOfClicks = savedInstanceState.getInt("Presses");
         tvNumberOfClicks.setText(String.valueOf(numberOfClicks));
-        for(int[] i : ids){
-            for(int j : i){
-                Log.d("ARRIDS","Value: "+j);
-            }
-        }
-        for(int[] i : values){
-            for(int j : i){
-                Log.d("ARRvalues","Value: "+j);
-            }
-        }
-        Log.d("Reset","================================");
+        values = arrayToMatrix(savedInstanceState.getIntArray("Values"), values.length, values[0].length);
+        ids = arrayToMatrix(savedInstanceState.getIntArray("Ids"), ids.length, ids[0].length);
+        updateViews();
     }
 
+    /**
+     * Aplica de forma recursiva la función updateView-
+     */
+    private void updateViews() {
+        for (int i = 0; i < values.length; i++) {
+            for (int j = 0; j < values[i].length; j++) {
+                updateView(i, j);
+            }
+        }
+    }
+
+    /**
+     * Ajusta el fondo de las casillas por el correcto.
+     * Ya que cuando se rota el dispositivo se generan aleatoriamente.
+     * @param x: int - Ubicación del elmento en el eje horizontal.
+     * @param y: int - Ubicación del elmento en el eje vertical.
+     */
+    private void updateView(int x, int y){
+        TileView tt = (TileView) findViewById(ids[x][y]);
+        tt.setBackgroundResource(pictures[values[x][y]]);
+        tt.invalidate();
+    }
+
+    /**
+     * Convierte la matriz dada en un array unidimensional.
+     * @param matrix: int[][] - Matriz a ser transformada.
+     * @return int[] - Array unidimensional generado en base a la matriz dada.
+     */
     private int[] matrixToArray(int[][] matrix){
         int array[] = new int[matrix.length*matrix[0].length];
         for(int i = 0; i < matrix.length; i++) {
@@ -448,10 +483,17 @@ public class Flipi extends AppCompatActivity {
         return array;
     }
 
-    private int[][] arrayToMatrix(int[] array, int x, int y) {
+    /**
+     * Convierte el array unidimensional dado en una matriz de x e y dimensiones.
+     * @param array: int[] - Array unidimensional a ser transformado.
+     * @param y: int - Elementos en la vertical.
+     * @param x: int - Elementos en la horizontal.
+     * @return: int[][] - Matriz generada en base a los parámetros de entrada.
+     */
+    private int[][] arrayToMatrix(int[] array, int y, int x) {
         int[][] matrix = new int[x][y];
-        for (int row = 0; row < x; row++) {
-            for (int column = 0; column < y; column++) {
+        for (int row = 0; row < y; row++) {
+            for (int column = 0; column < x; column++) {
                 matrix[row][column] = array[row * x + column];
             }
         }
