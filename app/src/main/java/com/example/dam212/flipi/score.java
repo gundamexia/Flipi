@@ -24,7 +24,7 @@ public class score extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.score);
 
-        if(genList() == null) mAdapter = new ListAdapter(this, R.id.listViewScore , Arrays.asList(genNotFound()));
+        if(genList().isEmpty()) mAdapter = new ListAdapter(this, R.id.listViewScore , Arrays.asList(genNotFound()));
         else mAdapter = new ListAdapter(this, R.id.listViewScore , genList());
 
         ((ListView)findViewById(R.id.listViewScore)).setAdapter(mAdapter);
