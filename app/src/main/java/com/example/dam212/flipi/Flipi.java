@@ -1,6 +1,5 @@
 package com.example.dam212.flipi;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.app.Service;
 import android.content.Intent;
@@ -19,11 +18,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Random;
 
 public class Flipi extends AppCompatActivity {
@@ -275,7 +273,9 @@ public class Flipi extends AppCompatActivity {
         Intent resultIntent = new Intent();
         Log.i("GAME_FINISHED", "User won the game");
         //Guarda al ganar
-        //saveWinner()
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy - hh:mm a");
+        String date = format.format(new Date());
+        saveWinner(numberOfClicks, getIntent().getStringExtra("username"), date, getIntent().getBooleanExtra("saveToSD", false));
         resultIntent.putExtra("clicks", numberOfClicks);
         setResult(RESULT_OK, resultIntent);
         finish();
@@ -295,14 +295,14 @@ public class Flipi extends AppCompatActivity {
      * @param numberOfClicks int que contiene la cantidad de clicks que hizo el jugador
      * @param playerName String nombre del jugador
      * @param investedTime Date tiempo invertido por el jugador
-     * @param storageType int tipo de guardado que quiere el jugador. 0 = Interno, 1 = SD
+     * @param storageType int tipo de guardado que quiere el jugador. False = Interno, True = SD
      */
-    private void saveWinner(int numberOfClicks, String playerName, Date investedTime, int storageType) {
+    private void saveWinner(int numberOfClicks, String playerName, String investedTime, boolean storageType) {
         String fileName = "results.txt";
         FileOutputStream fOS = null;
-        String data = numberOfClicks + "," + playerName + "," + investedTime;
+        String data = numberOfClicks + "," + playerName + "," + investedTime + System.getProperty("line.separator");
         try {
-            if(storageType == 0) {
+            if(!storageType) {
                 File file = new File(this.getFilesDir(), fileName);
                 if(!file.exists()) file.createNewFile();
                 fOS = new FileOutputStream(file, true);
@@ -310,11 +310,8 @@ public class Flipi extends AppCompatActivity {
                 Toast.makeText(this, "Data of the player saved", Toast.LENGTH_SHORT).show();
             } else {
                 if(isExternalStorageWritable()) {
-                    File file = new File(Environment.getExternalStorageDirectory().toString() + "/flipi/" + fileName);
-                    if(!file.exists()) {
-                        file.getParentFile().mkdirs();
-                        file.createNewFile();
-                    }
+                    File file = new File(getExternalFilesDir("flipi") + File.separator + fileName);
+                    if(!file.exists()) file.createNewFile();
                     fOS = new FileOutputStream(file, true);
                     fOS.write(data.getBytes());
                     Toast.makeText(this, "Data of the player saved", Toast.LENGTH_SHORT).show();

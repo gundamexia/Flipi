@@ -38,10 +38,10 @@ public class score extends AppCompatActivity{
     private ArrayList<ListItem> genList() {
         String fileName = "results.txt";
         FileInputStream fis = null;
-        ArrayList<ListItem> lista = null;
+        ArrayList<ListItem> lista = new ArrayList<>();
         try {
             File file = new File(this.getFilesDir(), fileName);
-            File fileSD = new File(Environment.getExternalStorageDirectory().toString() + "/flipi/" + fileName);
+            File fileSD = new File(getExternalFilesDir("flipi") + File.separator + fileName);
             if(file.exists()) {
                 fis = new FileInputStream(file);
                 InputStreamReader isr = new InputStreamReader(fis);

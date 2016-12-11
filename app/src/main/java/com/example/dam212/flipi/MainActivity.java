@@ -71,8 +71,6 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Inicia los view con sus variables necesarias.
      */
-
-
     private void initVariables() {
         seekBarRows = (SeekBar) findViewById(R.id.seekBarRows);
         seekBarColumns = (SeekBar) findViewById(R.id.seekBarColumns);
@@ -99,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
         intentFlipi.putExtra("Columns", seekBarColumns.getProgress());
         intentFlipi.putExtra("MaxLoop", seekBarMaxLoop.getProgress());
         intentFlipi.putExtra("selectedGame", spinnerTypeOfGame.getSelectedItemPosition());
+        intentFlipi.putExtra("username", username);
+        intentFlipi.putExtra("saveToSD", saveToSD);
         if(checkBoxSound.isSelected()) intentFlipi.putExtra("Sound", true);
         if(checkBoxHaptic.isSelected()) intentFlipi.putExtra("Haptic", true);
 
@@ -147,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
         intentPreferences.putExtra("SaveToSD", saveToSD);
         startActivityForResult(intentPreferences, PREFERENCES);
     }
-
 
     // FUCK ME, uso una variable deprecated, lo sé.
     private void  changeLanguage(Locale language){
