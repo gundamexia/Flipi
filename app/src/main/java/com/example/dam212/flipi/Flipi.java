@@ -5,6 +5,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -20,8 +21,6 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Random;
 
 public class Flipi extends AppCompatActivity {
@@ -273,9 +272,8 @@ public class Flipi extends AppCompatActivity {
         Intent resultIntent = new Intent();
         Log.i("GAME_FINISHED", "User won the game");
         //Guarda al ganar
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy - hh:mm a");
-        String date = format.format(new Date());
-        saveWinner(numberOfClicks, getIntent().getStringExtra("username"), date, getIntent().getBooleanExtra("saveToSD", false));
+        long timeInSeconds= (SystemClock.elapsedRealtime() - chronometer.getBase()) / 1000;
+        saveWinner(numberOfClicks, getIntent().getStringExtra("username"), String.valueOf(timeInSeconds) + "s", getIntent().getBooleanExtra("saveToSD", false));
         resultIntent.putExtra("clicks", numberOfClicks);
         setResult(RESULT_OK, resultIntent);
         finish();

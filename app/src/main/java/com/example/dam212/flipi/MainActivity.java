@@ -13,6 +13,11 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
         if(getIntent().getStringExtra("exitApp") != null) finish();
 
         initVariables();
+        saveLogIn();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -62,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.itemSpanish:
                 changeLanguage(new Locale("es"));
+                return true;
+            case R.id.itemLogIn:
+                openLogInList();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -154,6 +162,40 @@ public class MainActivity extends AppCompatActivity {
         Configuration configuration = getResources().getConfiguration();
         configuration.locale = language;
         this.recreate();
+    }
+
+    /**
+     * Sirve para guardar los inicios de sesión del usuario.
+     */
+    private void saveLogIn() {
+        FileOutputStream fOS = null;
+        File file = new File(this.getFilesDir(), "login.txt");
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy  hh:mm a");
+        String date = format.format(new Date());
+        String data = username + " - " + date + System.getProperty("line.separator");
+        try {
+            if(!file.exists()) file.createNewFile();
+            fOS = new FileOutputStream(file, true);
+            fOS.write(data.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(fOS != null) try {
+                fOS.close();
+            } catch (IOException e) {
+                //e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Abre la actividad score para mostrar los inicios de sesión
+     */
+    private void openLogInList() {
+        Intent intent = new Intent(getApplicationContext(), score.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("openAsLogIn", "openAsLogIn");
+        startActivity(intent);
     }
 
 }

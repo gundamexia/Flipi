@@ -16,6 +16,7 @@
     <string name="itemSpanish">Español</string>
     <string name="itemScore">Récords</string>
     <string name="itemPreferences">Preferencias</string>
+    <string name="itemLogIn">Inicios de sesión</string>
 
     <string-array name="games">
         <item>Flip: Colores</item>

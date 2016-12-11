@@ -17,6 +17,7 @@
     <string name="itemSpanish">Spanish</string>
     <string name="itemScore">Score</string>
     <string name="itemPreferences">Preferences</string>
+    <string name="itemLogIn">Logins</string>
 
     <string-array name="games">
         <item>Flip: Colors</item>

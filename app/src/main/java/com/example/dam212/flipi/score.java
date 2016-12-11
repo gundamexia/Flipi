@@ -24,8 +24,12 @@ public class score extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.score);
 
-        if(genList().isEmpty()) mAdapter = new ListAdapter(this, R.id.listViewScore , Arrays.asList(genNotFound()));
-        else mAdapter = new ListAdapter(this, R.id.listViewScore , genList());
+        if(getIntent().getStringExtra("openAsLogIn") != null) {
+            mAdapter = new ListAdapter(this, R.id.listViewScore , genList("login.txt"));
+        } else {
+            if(genList("results.txt").isEmpty()) mAdapter = new ListAdapter(this, R.id.listViewScore , Arrays.asList(genNotFound()));
+            else mAdapter = new ListAdapter(this, R.id.listViewScore , genList("results.txt"));
+        }
 
         ((ListView)findViewById(R.id.listViewScore)).setAdapter(mAdapter);
     }
@@ -35,13 +39,12 @@ public class score extends AppCompatActivity{
      * de ListItem.
      * @return array lista de ListItem
      */
-    private ArrayList<ListItem> genList() {
-        String fileName = "results.txt";
+    private ArrayList<ListItem> genList(String name) {
         FileInputStream fis = null;
         ArrayList<ListItem> lista = new ArrayList<>();
         try {
-            File file = new File(this.getFilesDir(), fileName);
-            File fileSD = new File(getExternalFilesDir("flipi") + File.separator + fileName);
+            File file = new File(this.getFilesDir(), name);
+            File fileSD = new File(getExternalFilesDir("flipi") + File.separator + name);
             if(file.exists()) {
                 fis = new FileInputStream(file);
                 InputStreamReader isr = new InputStreamReader(fis);
@@ -49,7 +52,8 @@ public class score extends AppCompatActivity{
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
                     String data[] = line.split(",");
-                    lista.add(new ListItem(data[1], data[2], data[0]));
+                    if(data.length == 1) lista.add(new ListItem(data[0], "", ""));
+                    else lista.add(new ListItem(data[1], data[2], data[0]));
                 }
             }
             if(fileSD.exists()) {
@@ -79,5 +83,4 @@ public class score extends AppCompatActivity{
                 new ListItem("List", "not", "found.")
         };
     }
-
 }

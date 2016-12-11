@@ -21,4 +21,7 @@
     <item
         android:id="@+id/itemPreferences"
         android:title="@string/itemPreferences" />
+    <item
+        android:id="@+id/itemLogIn"
+        android:title="@string/itemLogIn" />
 </menu>
