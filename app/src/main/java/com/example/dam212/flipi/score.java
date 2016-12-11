@@ -6,10 +6,8 @@ import android.widget.ListView;
 
 import java.util.Arrays;
 
-public class Score extends AppCompatActivity{
+public class score extends AppCompatActivity{
     ListAdapter mAdapter;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

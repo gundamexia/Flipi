@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void launchScoresActivity(){
-        Intent intentScore = new Intent(this, Score.class);
+        Intent intentScore = new Intent(this, score.class);
         startActivity(intentScore);
 
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Environment;
 import android.os.Vibrator;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -13,7 +14,13 @@ import android.view.View;
 import android.widget.Chronometer;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Date;
 import java.util.Random;
 public class Flipi extends Activity {
 
@@ -262,6 +269,8 @@ public class Flipi extends Activity {
     private void gameWon(){
         Intent resultIntent = new Intent();
         Log.i("GAME_FINISHED", "User won the game");
+        //Guarda al ganar
+        //saveWinner()
         resultIntent.putExtra("clicks", numberOfClicks);
         setResult(RESULT_OK, resultIntent);
         finish();
@@ -273,5 +282,55 @@ public class Flipi extends Activity {
         Log.i("GAME_FINISHED", "Back button pressed");
         setResult(RESULT_CANCELED);
         finish();
+    }
+
+    /**
+     * Guarda la información del jugador, el número de clicks que hizo, el nombre, el tiempo invertido
+     * y cómo lo quiere guardar el jugador.
+     * @param numberOfClicks int que contiene la cantidad de clicks que hizo el jugador
+     * @param playerName String nombre del jugador
+     * @param investedTime Date tiempo invertido por el jugador
+     * @param storageType int tipo de guardado que quiere el jugador. 0 = Interno, 1 = SD
+     */
+    private void saveWinner(int numberOfClicks, String playerName, Date investedTime, int storageType) {
+        String fileName = "results.txt";
+        FileOutputStream fOS = null;
+        String data = numberOfClicks + "," + playerName + "," + investedTime;
+        try {
+            if(storageType == 0) {
+                File file = new File(this.getFilesDir(), fileName);
+                if(!file.exists()) file.createNewFile();
+                fOS = new FileOutputStream(file, true);
+                fOS.write(data.getBytes());
+                Toast.makeText(this, "Data of the player saved", Toast.LENGTH_SHORT).show();
+            } else {
+                if(isExternalStorageWritable()) {
+                    File file = new File(Environment.getExternalStorageDirectory().toString() + "/flipi/" + fileName);
+                    if(!file.exists()) file.createNewFile();
+                    fOS = new FileOutputStream(file, true);
+                    fOS.write(data.getBytes());
+                    Toast.makeText(this, "Data of the player saved", Toast.LENGTH_SHORT).show();
+                } else Toast.makeText(this, "Insert a SD card", Toast.LENGTH_SHORT).show();
+            }
+        } catch (IOException e) {
+            //e.printStackTrace();
+            Toast.makeText(this, "File not found", Toast.LENGTH_SHORT).show();
+        } finally {
+            if(fOS != null) try {
+                fOS.close();
+            } catch (IOException e) {
+                //e.printStackTrace();
+            }
+        }
+
+    }
+
+    /**
+     * Revisa si el almacenamiento externo está disponible para la lectura y escritura.
+     * @return boolean True si está disponible, False si no lo está
+     */
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        return Environment.MEDIA_MOUNTED.equals(state);
     }
 }
