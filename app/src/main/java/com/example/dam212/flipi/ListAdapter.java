@@ -42,7 +42,7 @@ public class ListAdapter extends ArrayAdapter<ListItem> {
                 time.setText(item.getTime());
             }
 
-            if (! score.equals(null)) {
+            if (score != null) {
                 score.setText(item.getScore());
             }
         }
