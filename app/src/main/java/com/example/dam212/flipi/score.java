@@ -35,9 +35,9 @@ public class score extends AppCompatActivity{
     }
 
     /**
-     * Busca en la memoria interna y externa los resultados de los jugadores para ponerlos en un array
+     * Busca en la memoria interna y externa los resultados de los jugadores para ponerlos en un Lista
      * de ListItem.
-     * @return array lista de ListItem
+     * @return ArrayList - Lista de ListItems sacados de la memoria del dispositivo.
      */
     private ArrayList<ListItem> genList(String name) {
         FileInputStream fis = null;
@@ -78,9 +78,11 @@ public class score extends AppCompatActivity{
         return lista;
     }
 
+    /**
+     * genera un ListItem para decirle al usuario que no se ha encrontrado el archivo.
+     * @return ListItem - ListItem conteniendo la frase "List not found".
+     */
     private ListItem[] genNotFound(){
-        return new ListItem[]{
-                new ListItem("List", "not", "found.")
-        };
+        return new ListItem[]{new ListItem("List", "not", "found.")};
     }
 }

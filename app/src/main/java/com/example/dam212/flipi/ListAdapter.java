@@ -9,12 +9,28 @@ import android.widget.TextView;
 
 import java.util.List;
 
+/**
+ * Adaptador personalizado para poder crear las vistas que queramos en la clase Score.
+ */
 public class ListAdapter extends ArrayAdapter<ListItem> {
 
+    /**
+     * El constructor de la clase, básicamente un wrapper de ArrayAdapter<T>, un adaptador propio.
+     * @param context Context - Contexto donde se creará.
+     * @param resource int - Id del recurso donde se añadirá.
+     * @param items List<ListItem> - Lista de todos los elementos que queremos representar.
+     */
     public ListAdapter(Context context, int resource, List<ListItem> items) {
         super(context, resource, items);
     }
 
+    /**
+     * Callback del adaptador.
+     * @param position int - posición del elemento a adquirir.
+     * @param convertView View - elemento el cual va a ser la base atómica del ViewList.
+     * @param parent ViewGroup - padre del elemento. No usado.
+     * @return View - retorna la vista compuesta.
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -27,7 +43,6 @@ public class ListAdapter extends ArrayAdapter<ListItem> {
         if (item != null) {
             TextView name = (TextView) view.findViewById(R.id.textViewNombre);
             TextView date = (TextView) view.findViewById(R.id.textViewDate);
-            TextView time = (TextView) view.findViewById(R.id.textViewTime);
             TextView score = (TextView) view.findViewById(R.id.textViewScore);
 
             if (name != null) {
@@ -36,10 +51,6 @@ public class ListAdapter extends ArrayAdapter<ListItem> {
 
             if (date != null) {
                 date.setText(item.getDate());
-            }
-
-            if (time != null) {
-                time.setText(item.getTime());
             }
 
             if (score != null) {

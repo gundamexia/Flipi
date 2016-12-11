@@ -23,6 +23,23 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Random;
 
+/**
+ *  Juego sobre el cual versa la aplicación
+ *  Variables internas:
+ *  COLOR & NUMBER: int - Alias para saber si el usuario quiere colores o números en las casillas.
+ *  colors & numbers: int[] - Array conteniendo en memoria los fondos: colores o números, respectivamente.
+ *  pictures: int [] - Array definitivo de los fondos a usar.
+ *  topTileX & topTileX: int - Tamáño máximo de la cuadrícula.ç
+ *  topElements: int - Máximo número de elementos.
+ *  hasSound & hasVibration: boolean - Definen si el usuario quiere sonido y/o vibracion, o no.
+ *  ids: int[] - Matriz contenedora de todos los ids de las cuadrículas.
+ *  values: int[] - Matriz contenedora de todos los valores de las cuadrículas.
+ *  numberOfClicks: int - Numero de clicks realizados hasta el momento.
+ *  mp: MediaPlayer - Reproductor de sonidos.
+ *  vibratorService: Vibrator - Generador de respuesta háptica.
+ *  tvNumberOfClicks: TextView - Elemento gráfico que mostrará los clics realizados (numberOfClicks).
+ *  chronometer: Chronometer - Cronómetro del juego que contará el tiempo de ejecución y se lo mostrará al usuario.
+ */
 public class Flipi extends AppCompatActivity {
 
     //tipos de juego
@@ -87,6 +104,15 @@ public class Flipi extends AppCompatActivity {
     // Cronómetro del juego;
     private Chronometer chronometer;
 
+    /**
+     * Callback definido por android, llamado cuando se arranca esta actividad.
+     * Define las variables tanto internnas como externas, basándose en los parametros pasados a la actividad
+     * y alguna función que varia en tiempo de ejecución.
+     * Limpia el tablero de posibles retos.
+     * Genera el contenido del tablero.
+     * Finalmente se inicializa el cronómetro.
+     * @param savedInstanceState Bundle pasado si es re-inicializado despues de haber sido parada la app.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,14 +190,29 @@ public class Flipi extends AppCompatActivity {
         chronometer.start();
     }
 
-
+    /**
+     * Callback definido por android para "inflar" menús.
+     * @param menu El menu de opciones en el que se colocarán los items.
+     * @return Boolean - True siempre, en caso contrario, no mostraría el menú.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.flipi_menu, menu);
         return true;
     }
 
-    //Método llamado al clickar en un botón (Definido programáticamente).
+    /**
+     * Lanza el actualizador en las casillas aledañas y la misma que se indica con los parámetros
+     *  X e Y.
+     *  Contempla todos los escenarios que pudieran lanzar excepciones (Evitando salirse
+     *  del array).
+     *  Comprueba si ha de sonar o si ha de vibrar en vase a las variables globales
+     *  hasVibration y hasSound .
+     *  Actualiza el contador de clicks y el elemento gráfico de representación de los mismos.
+     *  Finalmente comprueba si se ha de acabar la partida {@link #hasFinished}.
+     * @param x posición de la casilla en el eje horizontal.
+     * @param y posición de la casilla en el eje vertical.
+     */
     protected void hasClick(int x, int y) {
         Log.i("Clicked", "Start of click action");
         // vibrar y/o sonar si está configurado
@@ -243,8 +284,12 @@ public class Flipi extends AppCompatActivity {
         if (hasFinished()) gameWon();
     }
 
-    //No estoy muy seguro de como funciona,
-    // pero lo que hace es actualizar las cuadriculas (numero o color) CREO.
+    /**
+     * Actualiza el valor y la imagen asociadas a la casilla indicada en la cuadrícula por los
+     * parametros X e Y.
+     * @param x posición de la casilla en el eje horizontal.
+     * @param y posición de la casilla en el eje vertical.
+     */
     private void changeView(int x, int y){
         TileView tt = (TileView) findViewById(ids[x][y]);
         int newIndex = tt.getNewIndex();
@@ -253,8 +298,12 @@ public class Flipi extends AppCompatActivity {
         tt.invalidate();
     }
 
-    //Comprueba que la partida haya acabado.
-    //Es decir que todas las casillas compartan número o color.
+    /**
+     * Comprueba que la partida haya acabado,
+     * es decir que todas las casillas compartan número o color,
+     * devolviendo verdadero o falso si se ha acabado la partida.
+     * @return Boolean - Si ha acabado la partida o no.
+     */
     private Boolean hasFinished() {
         Log.i("checkIfFinished", "Start of check action");
         int targetValue = values[0][0];
@@ -267,7 +316,12 @@ public class Flipi extends AppCompatActivity {
     }
 
 
-    //Acaba la partida devolviendo el total de clicks.
+    /**
+     * Da por ganado el juego:
+     * Guarda en la memoria del móvil el nombre de usuario, fecha y pulsaciones realizadas.
+     * Después devolvuelve los mismos a la actividad principal.
+     * Por ultimo, finaliza esta actividad.
+     */
     private void gameWon(){
         Intent resultIntent = new Intent();
         Log.i("GAME_FINISHED", "User won the game");
@@ -279,7 +333,9 @@ public class Flipi extends AppCompatActivity {
         finish();
     }
 
-    //
+    /**
+     * Sobrescerito el callback lanzado cuando se pulsa el botón físico "atrás".
+     */
     @Override
     public void onBackPressed() {
         Log.i("GAME_FINISHED", "Back button pressed");
@@ -359,6 +415,7 @@ public class Flipi extends AppCompatActivity {
         savedInstanceState.putBoolean("MyBoolean", true);
         savedInstanceState.putLong("Chronometer", chronometer.getBase());
         savedInstanceState.putInt("Presses", numberOfClicks);
+        savedInstanceState.putIntArray("values");
     }
 
     @Override
@@ -368,5 +425,36 @@ public class Flipi extends AppCompatActivity {
         chronometer.start();
         numberOfClicks = savedInstanceState.getInt("Presses");
         tvNumberOfClicks.setText(String.valueOf(numberOfClicks));
+        for(int[] i : ids){
+            for(int j : i){
+                Log.d("ARRIDS","Value: "+j);
+            }
+        }
+        for(int[] i : values){
+            for(int j : i){
+                Log.d("ARRvalues","Value: "+j);
+            }
+        }
+        Log.d("Reset","================================");
+    }
+
+    private int[] matrixToArray(int[][] matrix){
+        int array[] = new int[matrix.length*matrix[0].length];
+        for(int i = 0; i < matrix.length; i++) {
+            for(int j = 0; j < matrix[i].length; j++) {
+                array[i * matrix[i].length + j] = matrix[i][j];
+            }
+        }
+        return array;
+    }
+
+    private int[][] arrayToMatrix(int[] array, int x, int y) {
+        int[][] matrix = new int[x][y];
+        for (int row = 0; row < x; row++) {
+            for (int column = 0; column < y; column++) {
+                matrix[row][column] = array[row * x + column];
+            }
+        }
+        return matrix;
     }
 }

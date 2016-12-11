@@ -20,6 +20,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ *  Punto de entrada de la actividad, aquí se presentan al usuario la configuración básica de la aplicación.
+ *  FLIPI & PREFERENCES: int - Alias para lanzar las clases sugeridas.
+ *  username: String - Nombre del usuario.
+ *  saveToSD: boolean - Si se ha de guardar en la memoria local o externa.
+ *  seekBarRows, seekBarColumns, seekBarMaxLoop: SeekBar - Guardan el elemento gráfico.
+ *  checkBoxSound, heckBoxHaptic: CheckBox - Guardan el elemento gráfico.
+ *  spinnerTypeOfGame: Spinner - Guardan el elemento gráfico.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private final int FLIPI = 0;
@@ -35,6 +44,12 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox checkBoxHaptic;
     private Spinner spinnerTypeOfGame;
 
+    /**
+     * Callback generado cuando se inicia la actividad.
+     * Se encatga de llamar a initVariables().
+     * Si recive la señal de salida del bundle, cierra la app.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,13 +61,22 @@ public class MainActivity extends AppCompatActivity {
         saveLogIn();
     }
 
+    /**
+     * Callback generado cuando se inicia el menu de la actividad.
+     * @param menu Menu - menu que se va a inflar.
+     * @return Boolean - siempre true para que muestre el menu.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main_menu, menu);
         return true;
     }
 
-
+    /**
+     * Callback generado cuando se clicka en un item del menu.
+     * @param item MenuItem - item que se ha clickado.
+     * @return retorna true para acabarlo aquí, si no ejecuta el procesamiento habitual.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -113,6 +137,13 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intentFlipi, FLIPI);
     }
 
+    /**
+     * Callback  llamado cuando se termina la ejecucion de la actividad llamada con "startActivityForResult"
+     * Distingue entre las llamadas a Flipi y Preferences.
+     * @param requestCode int - Que actividad acabó.
+     * @param resultCode int - Como acabó la actividad.
+     * @param data Intent - Datos retonados por la actividad.
+     */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(requestCode) {
             case FLIPI:
@@ -124,6 +155,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Llamado cuando se termina la actividad Preferences.
+     * Solo se ejecuta si el resultado es RESULT_OK
+     * @param resultCode int - Como acabó la actividad.
+     * @param data Intent - Datos retonados por la actividad.
+     */
     private void onPreferencesResult(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             Bundle result = data.getExtras();
@@ -132,6 +169,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Llamado cuando se termina la actividad Flipi.
+     * Diferencia entre que acabara bien, no acabase o sea cancelado.
+     * @param resultCode int - Como acabó la actividad.
+     * @param data Intent - Datos retonados por la actividad.
+     */
     private void onFlipiResult(int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             Bundle result = data.getExtras();
@@ -144,11 +187,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     *  Wrap para lanzar la actividad Scores.
+     */
     private void launchScoresActivity(){
         Intent intentScore = new Intent(this, score.class);
         startActivity(intentScore);
     }
 
+    /**
+     *  Wrap para lanzar la actividad Preferences.
+     *  Le manda username y saveToSD.
+     */
     private void launchPreferencesActivity(){
         Intent intentPreferences = new Intent(this, Preferences.class);
         intentPreferences.putExtra("Username", username);
@@ -156,7 +206,12 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intentPreferences, PREFERENCES);
     }
 
-    // FUCK ME, uso una variable deprecated, lo sé.
+    /**
+     * Cambia el idioma de la aplicación a la indicada en language.
+     * Después recrea toda interfaz para forzar el actualizado de las vistas.
+     * @param language Locale - región a la cual se debe cambiar el idioma.
+     * @deprecated Se usa: configuration.locale = language; que es una variable en desuso.
+     */
     private void  changeLanguage(Locale language){
         Log.i("Lang","changed to \""+language.getDisplayName()+"\".");
         Configuration configuration = getResources().getConfiguration();
