@@ -306,7 +306,10 @@ public class Flipi extends Activity {
             } else {
                 if(isExternalStorageWritable()) {
                     File file = new File(Environment.getExternalStorageDirectory().toString() + "/flipi/" + fileName);
-                    if(!file.exists()) file.createNewFile();
+                    if(!file.exists()) {
+                        file.getParentFile().mkdirs();
+                        file.createNewFile();
+                    }
                     fOS = new FileOutputStream(file, true);
                     fOS.write(data.getBytes());
                     Toast.makeText(this, "Data of the player saved", Toast.LENGTH_SHORT).show();
@@ -322,7 +325,6 @@ public class Flipi extends Activity {
                 //e.printStackTrace();
             }
         }
-
     }
 
     /**
