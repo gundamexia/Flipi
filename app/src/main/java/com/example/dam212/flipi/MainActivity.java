@@ -18,6 +18,10 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     private final int FLIPI = 0;
+    private final int PREFERENCES = 1;
+
+    private String username;
+    private boolean saveToSD;
 
     private SeekBar seekBarRows;
     private SeekBar seekBarColumns;
@@ -78,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
         checkBoxHaptic = (CheckBox) findViewById(R.id.checkBoxHaptic);
 
         spinnerTypeOfGame = (Spinner) findViewById(R.id.spinnerTypeOfGame);
+
+        username = "Anonymous";
+        saveToSD = false;
     }
 
     /**
@@ -103,6 +110,17 @@ public class MainActivity extends AppCompatActivity {
             case FLIPI:
                 onFlipiResult(resultCode, data);
                 break;
+            case PREFERENCES:
+                onPreferencesResult(resultCode, data);
+                break;
+        }
+    }
+
+    private void onPreferencesResult(int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            Bundle result = data.getExtras();
+            username = result.getString("Username");
+            saveToSD = result.getBoolean("SaveToSD");
         }
     }
 
@@ -121,12 +139,13 @@ public class MainActivity extends AppCompatActivity {
     private void launchScoresActivity(){
         Intent intentScore = new Intent(this, score.class);
         startActivity(intentScore);
-
-
     }
 
     private void launchPreferencesActivity(){
-
+        Intent intentPreferences = new Intent(this, Preferences.class);
+        intentPreferences.putExtra("Username", username);
+        intentPreferences.putExtra("SaveToSD", saveToSD);
+        startActivityForResult(intentPreferences, PREFERENCES);
     }
 
 

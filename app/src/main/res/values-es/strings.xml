@@ -25,4 +25,8 @@
     <string name="Presses">Pulsaciones:</string>
     <string name="itemExitGame">Salir del Juego</string>
     <string name="itemExitApp">Salir de la App</string>
+
+    <string name="textViewUsername">Nombre de usuario</string>
+    <string name="switchSD">Guardar datos en SD</string>
+    <string name="buttonSavePreferences">Aceptar</string>
 </resources>

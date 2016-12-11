@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
+
 public class Flipi extends AppCompatActivity {
 
     //tipos de juego
@@ -41,7 +42,6 @@ public class Flipi extends AppCompatActivity {
             R.drawable.ic_6c
     };
 
-
     //numeros
     private static final int []numbers = new int[]{
             R.drawable.ic_1n,
@@ -51,7 +51,6 @@ public class Flipi extends AppCompatActivity {
             R.drawable.ic_5n,
             R.drawable.ic_6n
     };
-
 
     //mantener el array que el usuario hay decidido utilizar
     private int []pictures = null;
@@ -87,6 +86,9 @@ public class Flipi extends AppCompatActivity {
 
     // Mostrará en pantalla el las veces que el usuario ha pulsado una celda
     private TextView tvNumberOfClicks = null;
+
+    // Cronómetro del juego;
+    private Chronometer chronometer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -161,8 +163,8 @@ public class Flipi extends AppCompatActivity {
             ll.addView(l2);
         }
         // cronómetro
-        Chronometer t = (Chronometer)findViewById(R.id.Chronometer);
-        t.start();
+        chronometer = (Chronometer)findViewById(R.id.Chronometer);
+        chronometer.start();
     }
 
 
@@ -354,5 +356,22 @@ public class Flipi extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putBoolean("MyBoolean", true);
+        savedInstanceState.putLong("Chronometer", chronometer.getBase());
+        savedInstanceState.putInt("Presses", numberOfClicks);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        chronometer.setBase(savedInstanceState.getLong("Chronometer"));
+        chronometer.start();
+        numberOfClicks = savedInstanceState.getInt("Presses");
+        tvNumberOfClicks.setText(String.valueOf(numberOfClicks));
     }
 }

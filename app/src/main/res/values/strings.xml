@@ -26,4 +26,8 @@
     <string name="Presses">Presses:</string>
     <string name="itemExitGame">Exit Game</string>
     <string name="itemExitApp">Exit App</string>
+
+    <string name="textViewUsername">Username</string>
+    <string name="switchSD">Store the data on the SD</string>
+    <string name="buttonSavePreferences">Accept</string>
 </resources>
