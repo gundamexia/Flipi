@@ -117,6 +117,7 @@ public class Flipi extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.flipi);
+
         vibratorService = (Vibrator)(getSystemService(Service.VIBRATOR_SERVICE));
         mp = MediaPlayer.create(this, R.raw.touch);
         tvNumberOfClicks = (TextView) findViewById(R.id.clicksTxt);
@@ -400,12 +401,13 @@ public class Flipi extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         switch (item.getItemId()) {
             case R.id.itemExitGame:
-                onBackPressed();
+                intent.putExtra("resumegame", "resumegame");
+                startActivity(intent);
                 return true;
             case R.id.itemExitApp:
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("exitApp", "exitapp");
                 startActivity(intent);
@@ -488,7 +490,7 @@ public class Flipi extends AppCompatActivity {
      * @param array: int[] - Array unidimensional a ser transformado.
      * @param y: int - Elementos en la vertical.
      * @param x: int - Elementos en la horizontal.
-     * @return: int[][] - Matriz generada en base a los parámetros de entrada.
+     * @return int[][] - Matriz generada en base a los parámetros de entrada.
      */
     private int[][] arrayToMatrix(int[] array, int y, int x) {
         int[][] matrix = new int[x][y];

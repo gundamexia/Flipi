@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox checkBoxSound;
     private CheckBox checkBoxHaptic;
     private Spinner spinnerTypeOfGame;
+    private boolean resumeGame;
 
     /**
      * Callback generado cuando se inicia la actividad.
@@ -55,7 +56,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        resumeGame = false;
+
         if(getIntent().getStringExtra("exitApp") != null) finish();
+        if(getIntent().getStringExtra("resumegame") != null) resumeGame = true;
 
         initVariables();
         saveLogIn();
@@ -124,15 +128,19 @@ public class MainActivity extends AppCompatActivity {
     public void sendBundle(View v) {
         Intent intentFlipi = new Intent(this, Flipi.class);
 
-        intentFlipi.putExtra("Rows", seekBarRows.getProgress());
+        if(!resumeGame) {
+            intentFlipi.putExtra("Rows", seekBarRows.getProgress());
 
-        intentFlipi.putExtra("Columns", seekBarColumns.getProgress());
-        intentFlipi.putExtra("MaxLoop", seekBarMaxLoop.getProgress());
-        intentFlipi.putExtra("selectedGame", spinnerTypeOfGame.getSelectedItemPosition());
-        intentFlipi.putExtra("username", username);
-        intentFlipi.putExtra("saveToSD", saveToSD);
-        if(checkBoxSound.isSelected()) intentFlipi.putExtra("Sound", true);
-        if(checkBoxHaptic.isSelected()) intentFlipi.putExtra("Haptic", true);
+            intentFlipi.putExtra("Columns", seekBarColumns.getProgress());
+            intentFlipi.putExtra("MaxLoop", seekBarMaxLoop.getProgress());
+            intentFlipi.putExtra("selectedGame", spinnerTypeOfGame.getSelectedItemPosition());
+            intentFlipi.putExtra("username", username);
+            intentFlipi.putExtra("saveToSD", saveToSD);
+            if(checkBoxSound.isSelected()) intentFlipi.putExtra("Sound", true);
+            if(checkBoxHaptic.isSelected()) intentFlipi.putExtra("Haptic", true);
+        } else intentFlipi.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+
+        //FLAG_ACTIVITY_REORDER_TO_FRONT trae de vuelta la activdad si ya se inició
 
         startActivityForResult(intentFlipi, FLIPI);
     }
