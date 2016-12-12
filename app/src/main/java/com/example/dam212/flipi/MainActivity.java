@@ -192,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_CANCELED) {
             Toast.makeText(this, "You exited the game.", Toast.LENGTH_SHORT).show();
+            resumeGame = false;
         }
     }
 
