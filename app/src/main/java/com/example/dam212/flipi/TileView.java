@@ -24,7 +24,7 @@ public class TileView extends Button {
      * @param x int - Posición horizontal del elemento.
      * @param y int - Posición vertical del elemento.
      * @param topElements int - El máximo de elementos.
-     * @param index int - Índex de la trama a aplicar.
+     * @param index int - Index de la trama a aplicar.
      * @param background int - Background a aplicar.
      */
     public TileView(Context context, int x, int y, int topElements, int index, int background) {

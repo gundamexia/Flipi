@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         if(getIntent().getStringExtra("resumegame") != null) resumeGame = true;
 
         initVariables();
-        saveLogIn();
+        if(getIntent().getStringExtra("resumegame") == null) saveLogIn();
     }
 
     /**
