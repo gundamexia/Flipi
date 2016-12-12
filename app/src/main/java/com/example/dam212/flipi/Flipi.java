@@ -280,7 +280,7 @@ public class Flipi extends AppCompatActivity {
         }
         // actualiza marcador
         numberOfClicks++;
-        tvNumberOfClicks.setText(numberOfClicks);
+        tvNumberOfClicks.setText(getString(R.string.textViewPulsations) + numberOfClicks);
         // se ha acabado la partida?
         if (hasFinished()) gameWon();
     }
@@ -402,14 +402,16 @@ public class Flipi extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         switch (item.getItemId()) {
             case R.id.itemExitGame:
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 intent.putExtra("resumegame", "resumegame");
                 startActivity(intent);
                 return true;
             case R.id.itemExitApp:
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                mp.release();
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("exitApp", "exitapp");
                 startActivity(intent);
                 return true;

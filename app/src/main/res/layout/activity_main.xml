@@ -157,5 +157,13 @@
             android:onClick="sendBundle"
             android:text="@string/buttonPlay" />
 
+        <Button
+            android:id="@+id/buttonResume"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="resumeGame"
+            android:text="@string/buttonResume"
+            android:visibility="gone"/>
+
     </LinearLayout>
 </ScrollView>

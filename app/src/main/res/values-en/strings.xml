@@ -5,6 +5,7 @@
     <string name="textViewColumns">Columns:</string>
     <string name="textViewMaxLoop">Max Loop:</string>
     <string name="buttonPlay">Play!</string>
+    <string name="buttonResume">Resume Game!</string>
     <string name="chooseAGame">Choose a game</string>
     <string name="checkBoxSound">Sound</string>
     <string name="checkBoxHaptic">Haptic</string>

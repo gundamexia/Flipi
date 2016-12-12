@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -43,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox checkBoxSound;
     private CheckBox checkBoxHaptic;
     private Spinner spinnerTypeOfGame;
-    private boolean resumeGame;
 
     /**
      * Callback generado cuando se inicia la actividad.
@@ -55,11 +55,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        resumeGame = false;
-
-        if(getIntent().getStringExtra("exitApp") != null) finish();
-        if(getIntent().getStringExtra("resumegame") != null) resumeGame = true;
 
         initVariables();
         if(getIntent().getStringExtra("resumegame") == null) saveLogIn();
@@ -127,22 +122,43 @@ public class MainActivity extends AppCompatActivity {
      */
     public void sendBundle(View v) {
         Intent intentFlipi = new Intent(this, Flipi.class);
+        intentFlipi.putExtra("Rows", seekBarRows.getProgress());
 
-        if(!resumeGame) {
-            intentFlipi.putExtra("Rows", seekBarRows.getProgress());
-
-            intentFlipi.putExtra("Columns", seekBarColumns.getProgress());
-            intentFlipi.putExtra("MaxLoop", seekBarMaxLoop.getProgress());
-            intentFlipi.putExtra("selectedGame", spinnerTypeOfGame.getSelectedItemPosition());
-            intentFlipi.putExtra("username", username);
-            intentFlipi.putExtra("saveToSD", saveToSD);
-            if(checkBoxSound.isSelected()) intentFlipi.putExtra("Sound", true);
-            if(checkBoxHaptic.isSelected()) intentFlipi.putExtra("Haptic", true);
-        } else intentFlipi.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-
-        //FLAG_ACTIVITY_REORDER_TO_FRONT trae de vuelta la activdad si ya se inició
+        intentFlipi.putExtra("Columns", seekBarColumns.getProgress());
+        intentFlipi.putExtra("MaxLoop", seekBarMaxLoop.getProgress());
+        intentFlipi.putExtra("selectedGame", spinnerTypeOfGame.getSelectedItemPosition());
+        intentFlipi.putExtra("username", username);
+        intentFlipi.putExtra("saveToSD", saveToSD);
+        if(checkBoxSound.isSelected()) intentFlipi.putExtra("Sound", true);
+        if(checkBoxHaptic.isSelected()) intentFlipi.putExtra("Haptic", true);
 
         startActivityForResult(intentFlipi, FLIPI);
+    }
+
+    /**
+     * Método que deja al jugar seguir jugando la partida que dejó sin terminar.
+     * @param v
+     */
+    public void resumeGame(View v) {
+        Intent intentFlipi = new Intent(this, Flipi.class);
+        intentFlipi.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        //FLAG_ACTIVITY_REORDER_TO_FRONT trae de vuelta la activdad si ya se inició
+        startActivityForResult(intentFlipi, FLIPI);
+    }
+
+    /**
+     * Es un método que se llama cuando la actividad se relanza de nuevo desde otra actividad haciendo
+     * obteniendo los extras que se declaró en la otra actividad sin tener que cerrar este.
+     * @param intent Intent - contiene los nuevos extras
+     */
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if(intent.getStringExtra("resumegame") != null) {
+            Button buttonResume = (Button) findViewById(R.id.buttonResume);
+            buttonResume.setVisibility(View.VISIBLE);
+        }
+        if(intent.getStringExtra("exitApp") != null) finish();
     }
 
     /**
@@ -192,7 +208,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_CANCELED) {
             Toast.makeText(this, "You exited the game.", Toast.LENGTH_SHORT).show();
-            resumeGame = false;
         }
     }
 
