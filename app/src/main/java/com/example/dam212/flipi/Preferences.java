@@ -9,8 +9,10 @@ import android.widget.EditText;
 import android.widget.Switch;
 
 /**
- * Muestra un ListView exclusivamente, conteniendo ListItems como elemento base.
+ * Muestra una serie de opciones tales como: el nombre del usuario y dónde quiere guardar sus
+ * estadísticas.
  */
+
 public class Preferences extends Activity  {
 
     /**

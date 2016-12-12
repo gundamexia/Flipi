@@ -280,7 +280,7 @@ public class Flipi extends AppCompatActivity {
         }
         // actualiza marcador
         numberOfClicks++;
-        tvNumberOfClicks.setText( getString(R.string.textViewPulsations) + numberOfClicks );
+        tvNumberOfClicks.setText(numberOfClicks);
         // se ha acabado la partida?
         if (hasFinished()) gameWon();
     }
@@ -328,7 +328,8 @@ public class Flipi extends AppCompatActivity {
         Log.i("GAME_FINISHED", "User won the game");
         //Guarda al ganar
         long timeInSeconds= (SystemClock.elapsedRealtime() - chronometer.getBase()) / 1000;
-        saveWinner(numberOfClicks, getIntent().getStringExtra("username"), String.valueOf(timeInSeconds) + "s", getIntent().getBooleanExtra("saveToSD", false));
+        saveWinner(numberOfClicks, getIntent().getStringExtra("username"),
+                String.valueOf(timeInSeconds) + "s", getIntent().getBooleanExtra("saveToSD", false));
         resultIntent.putExtra("clicks", numberOfClicks);
         setResult(RESULT_OK, resultIntent);
         finish();

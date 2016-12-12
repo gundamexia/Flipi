@@ -16,6 +16,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Muestra un ListView exclusivamente, conteniendo ListItems como elemento base.
+ */
+
 public class score extends AppCompatActivity{
     ListAdapter mAdapter;
 
