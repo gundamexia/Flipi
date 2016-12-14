@@ -411,9 +411,10 @@ public class Flipi extends AppCompatActivity {
                 return true;
             case R.id.itemExitApp:
                 mp.release();
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra("exitApp", "exitapp");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.putExtra("exitApp", "exitApp");
                 startActivity(intent);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

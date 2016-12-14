@@ -12,13 +12,15 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTop">
+            android:launchMode="standard">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Flipi" />
+        <activity
+            android:name=".Flipi"
+            android:launchMode="standard" />
         <activity android:name=".score" />
         <activity android:name=".Preferences" />
     </application>

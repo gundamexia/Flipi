@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if(getIntent().getStringExtra("exitApp") != null) finish();
+
         initVariables();
         if(getIntent().getStringExtra("resumegame") == null) saveLogIn();
     }
@@ -122,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void sendBundle(View v) {
         Intent intentFlipi = new Intent(this, Flipi.class);
+
         intentFlipi.putExtra("Rows", seekBarRows.getProgress());
 
         intentFlipi.putExtra("Columns", seekBarColumns.getProgress());
@@ -158,7 +161,6 @@ public class MainActivity extends AppCompatActivity {
             Button buttonResume = (Button) findViewById(R.id.buttonResume);
             buttonResume.setVisibility(View.VISIBLE);
         }
-        if(intent.getStringExtra("exitApp") != null) finish();
     }
 
     /**
@@ -208,6 +210,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_CANCELED) {
             Toast.makeText(this, "You exited the game.", Toast.LENGTH_SHORT).show();
+            Button buttonResume = (Button) findViewById(R.id.buttonResume);
+            buttonResume.setVisibility(View.GONE);
         }
     }
 
